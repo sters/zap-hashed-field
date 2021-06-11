@@ -56,7 +56,7 @@ func TestString(t *testing.T) {
 	}
 }
 
-func TestSha1(t *testing.T) {
+func TestSha512(t *testing.T) {
 	type args struct {
 		key   string
 		value string
@@ -70,7 +70,7 @@ func TestSha1(t *testing.T) {
 	}
 
 	text := "dammy"
-	sha1text := "2b469fb45502c6d28aa4abef62d721961e27ef76"
+	sha512text := "5a2a2b483083d88baa51cfc1e3f62efc2ce9d27baa9e773cbea9d154f5fca79954ba8afdeea88c06ea33f642743caa491b4a25446a64477cd71ae30c8db74caa"
 
 	arg := args{
 		key:   "dammy",
@@ -80,20 +80,20 @@ func TestSha1(t *testing.T) {
 	want := wants{
 		Key:    arg.key,
 		Type:   zapcore.StringType,
-		String: sha1text,
+		String: sha512text,
 	}
 
-	got := hashedfield.Sha1(arg.key, arg.value)
+	got := hashedfield.Sha512(arg.key, arg.value)
 
 	if !reflect.DeepEqual(got.Key, want.Key) {
-		t.Errorf("Sha1().Key = %v, want %v", got.Key, want.Key)
+		t.Errorf("Sha512().Key = %v, want %v", got.Key, want.Key)
 	}
 
 	if !reflect.DeepEqual(got.Type, want.Type) {
-		t.Errorf("Sha1().Type = %v, want %v", got.Type, want.Type)
+		t.Errorf("Sha512().Type = %v, want %v", got.Type, want.Type)
 	}
 
 	if !reflect.DeepEqual(got.String, want.String) {
-		t.Errorf("Sha1().String = %v, want %v", got.String, want.String)
+		t.Errorf("Sha512().String = %v, want %v", got.String, want.String)
 	}
 }

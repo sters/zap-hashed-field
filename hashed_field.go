@@ -13,7 +13,7 @@ func String(key string, value Hasher) zapcore.Field {
 	}
 }
 
-// Sha1 generate zapcore.Field with Sha1Hasher
-func Sha1(key string, value string) zapcore.Field {
-	return String(key, Sha1Hasher(value))
+// Sha512 generate zapcore.Field with Sha512Hasher
+func Sha512(key string, value string) zapcore.Field {
+	return String(key, Sha512Hasher(value))
 }
