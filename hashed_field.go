@@ -17,3 +17,8 @@ func String(key string, value Hasher) zapcore.Field {
 func Sha512(key string, value string) zapcore.Field {
 	return String(key, Sha512Hasher(value))
 }
+
+// Fnv128 generate zapcore.Field with Fnv128Hasher
+func Fnv128(key string, value string) zapcore.Field {
+	return String(key, Fnv128Hasher(value))
+}

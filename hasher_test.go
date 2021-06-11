@@ -27,7 +27,34 @@ func TestSha512Hasher_Hash(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.v.Hash(); got != tt.want {
-				t.Errorf("Sha512Hasher.Hash() = %v, want %v", got, tt.want)
+				t.Errorf("got = %v, want = %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestFnv128Hasher_Hash(t *testing.T) {
+	tests := []struct {
+		name string
+		v    hashedfield.Fnv128Hasher
+		want string
+	}{
+		{
+			name: "HelloWorld",
+			v:    hashedfield.Fnv128Hasher("HelloWorld"),
+			want: "c53c1eaca98cc15807e4f1a6db2d2be9",
+		},
+		{
+			name: "blank",
+			v:    hashedfield.Fnv128Hasher(""),
+			want: "6c62272e07bb014262b821756295c58d",
+		},
+	}
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.v.Hash(); got != tt.want {
+				t.Errorf("got = %v, want = %v", got, tt.want)
 			}
 		})
 	}
