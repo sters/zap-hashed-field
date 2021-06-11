@@ -1,22 +1,30 @@
+export GOBIN := $(PWD)/bin
+export PATH := $(GOBIN):$(PATH)
 
-BUILD_DIR=./build
+TOOLS=$(shell cat tools/tools.go | egrep '^\s_ '  | awk '{ print $$2 }')
 
-.PHONY: dep
-dep:
-	dep ensure -v
+.PHONY: bootstrap-tools
+bootstrap-tools:
+	@echo "Installing: " $(TOOLS)
+	@go install $(TOOLS)
 
-.PHONY: dep-update
-dep-update:
-	dep ensure -v -update
+.PHONY: lint
+lint:
+	golangci-lint run -v ./...
+	go-consistent -v ./...
 
-.PHONY: fmt
-fmt:
-	@gofmt ./...
+.PHONY: lint-fix
+lint-fix:
+	golangci-lint run --fix -v ./...
 
 .PHONY: test
 test:
-	@go test -race ./...
+	go test -v -race ./...
 
 .PHONY: cover
 cover:
-	@go test -race -coverpkg=./... -coverprofile=coverage.txt ./...
+	go test -v -race -coverpkg=./... -coverprofile=coverage.txt ./...
+
+.PHONY: tidy
+tidy:
+	go mod tidy
